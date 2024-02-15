@@ -23,7 +23,7 @@ To begin the assessment, follow these steps:
    npm run server
    ```
 
-3. **Access the Application**: Open your web browser and navigate to `http://localhost:3000` to access the MERN Task Manager application.
+3. **Access the Application**: Open your web browser and navigate to `http://localhost:8080` to access the MERN Task Manager application.
 
 ## Assessment Tasks
 
