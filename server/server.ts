@@ -26,7 +26,7 @@ app.use(cors(corsOptions));
 app.get("/api/tasks", getAllTasks);
 app.post("/api/tasks", createTask);
 app.delete("/api/tasks/:taskId", deleteTask);
-app.put("/api/tasks/:taskId/toggleDone", updateTask);
+app.put("/api/tasks/:taskId", updateTask);
 
 // Start the server
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

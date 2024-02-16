@@ -46,11 +46,11 @@ export const deleteTask = async (
   }
 };
 
-// Toggle done status of a task
 export const updateTask = async (req, res) => {
   try {
     const taskId = req.params.taskId;
     const updatedTask = req.body;
+    console.log("updatedTask...", updateTask);
     const task = await Task.findById(taskId);
     if (!task) {
       return res.status(404).json({ message: "Task not found" });
@@ -58,7 +58,9 @@ export const updateTask = async (req, res) => {
 
     task.title = updatedTask.title || task.title;
     task.description = updatedTask.description || task.description;
-    task.done = updatedTask.done !== undefined ? updatedTask.done : task.done;
+    if (updatedTask.hasOwnProperty("done")) {
+      task.done = updatedTask.done;
+    }
     await task.save();
     res.status(200).json({ message: "Task updated successfully", task });
   } catch (error) {

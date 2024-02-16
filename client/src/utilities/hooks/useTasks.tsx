@@ -48,19 +48,21 @@ const useTasks = (): UseTasks => {
   };
 
   const toggleDone = (taskId: string): void => {
+    const taskToUpdate = tasks.find((task) => task._id === taskId);
+    if (!taskToUpdate) {
+      console.error(`Task with ID ${taskId} not found.`);
+      return;
+    }
+    const updatedTask = { ...taskToUpdate, done: !taskToUpdate.done };
+
     axios
-      .put(`${API_URL}/api/tasks/${taskId}/toggleDone`)
+      .put(`${API_URL}/api/tasks/${taskId}`, updatedTask)
       .then(() => {
-        setTasks((prevTasks) => {
-          return prevTasks.map((task) => {
-            if (task._id === taskId) {
-              return { ...task, done: !task.done };
-            }
-            return task;
-          });
-        });
+        setTasks((prevTasks) =>
+          prevTasks.map((task) => (task._id === taskId ? updatedTask : task))
+        );
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error("Error toggling task done status:", err));
   };
 
   return { tasks, loading, addTask, deleteTask, toggleDone };
