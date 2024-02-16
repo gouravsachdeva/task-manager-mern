@@ -4,7 +4,7 @@ import TaskList from "./components/TaskList";
 import useTasks from "./utilities/hooks/useTasks";
 import "./App.css";
 
-const App = () => {
+const App: React.FC = () => {
   const { tasks, loading, addTask, deleteTask, toggleDone } = useTasks();
 
   return (

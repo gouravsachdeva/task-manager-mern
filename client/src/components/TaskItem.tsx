@@ -1,10 +1,22 @@
 import React from "react";
+import { Task } from "../models/Task";
 
-const TaskItem = ({ task, deleteTask, toggleDone }) => {
-  const taskStyle = {
+interface TaskItemProps {
+  task: Task;
+  deleteTask: (taskId: string) => void;
+  toggleDone: (taskId: string) => void;
+}
+
+const TaskItem: React.FC<TaskItemProps> = ({
+  task,
+  deleteTask,
+  toggleDone,
+}) => {
+  const taskStyle: React.CSSProperties = {
     textDecoration: task.done ? "line-through" : "none",
     color: task.done ? "#ccc" : "inherit",
   };
+
   return (
     <div className="task__item" style={taskStyle}>
       <h3>{task.title}</h3>

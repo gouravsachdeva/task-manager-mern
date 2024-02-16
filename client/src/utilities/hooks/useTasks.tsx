@@ -1,14 +1,28 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { API_URL } from '../constants/constants';
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { API_URL } from "../constants/constants";
+import { Task } from "../../models/Task";
 
-const useTasks = () => {
-  const [tasks, setTasks] = useState([]);
-  const [loading, setLoading] = useState(true);
+interface NewTask {
+  title: string;
+  description: string;
+}
+
+interface UseTasks {
+  tasks: Task[];
+  loading: boolean;
+  addTask: (newTask: NewTask) => void;
+  deleteTask: (taskId: string) => void;
+  toggleDone: (taskId: string) => void;
+}
+
+const useTasks = (): UseTasks => {
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     axios
-      .get(`${API_URL}/api/tasks`)
+      .get<Task[]>(`${API_URL}/api/tasks`)
       .then((res) => {
         setTasks(res.data);
         setLoading(false);
@@ -19,21 +33,21 @@ const useTasks = () => {
       });
   }, []);
 
-  const addTask = (newTask) => {
+  const addTask = (newTask: NewTask): void => {
     axios
       .post(`${API_URL}/api/tasks`, newTask)
       .then(() => window.location.reload())
       .catch((err) => console.log(err));
   };
 
-  const deleteTask = (taskId) => {
+  const deleteTask = (taskId: string): void => {
     axios
       .delete(`${API_URL}/api/tasks/${taskId}`)
       .then(() => window.location.reload())
       .catch((err) => console.log(err));
   };
 
-  const toggleDone = (taskId) => {
+  const toggleDone = (taskId: string): void => {
     axios
       .put(`${API_URL}/api/tasks/${taskId}/toggleDone`)
       .then(() => {
