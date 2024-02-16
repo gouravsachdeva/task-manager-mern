@@ -1,49 +1,41 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import TaskForm from "./components/TaskForm";
+import TaskList from "./components/TaskList";
+import { API_URL } from "./constants/constants";
+import "./App.css";
 
 const App = () => {
-    const [tasks, setTasks] = useState([]);
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
+  const [tasks, setTasks] = useState([]);
 
-    useEffect(() => {
-        axios.get('/api/tasks')
-            .then(res => setTasks(res.data))
-            .catch(err => console.log(err));
-    }, []);
+  useEffect(() => {
+    axios
+      .get(`${API_URL}/api/tasks`)
+      .then((res) => setTasks(res.data))
+      .catch((err) => console.log(err));
+  }, []);
 
-    const addTask = () => {
-        axios.post('/api/tasks', { title, description })
-            .then(() => window.location.reload())
-            .catch(err => console.log(err));
-    };
+  const addTask = (newTask) => {
+    axios
+      .post(`${API_URL}/api/tasks`, newTask)
+      .then(() => window.location.reload())
+      .catch((err) => console.log(err));
+  };
 
-    const deleteTask = (taskId) => {
-        axios.delete(`/api/tasks/${taskId}`)
-            .then(() => window.location.reload())
-            .catch(err => console.log(err));
-    };
+  const deleteTask = (taskId) => {
+    axios
+      .delete(`${API_URL}/api/tasks/${taskId}`)
+      .then(() => window.location.reload())
+      .catch((err) => console.log(err));
+  };
 
-    return (
-        <div>
-            <h1>Task Manager</h1>
+  return (
     <div>
-    <input type="text" value={title} onChange={e => setTitle(e.target.value)} placeholder="Title" />
-    <input type="text" value={description} onChange={e => setDescription(e.target.value)} placeholder="Description" />
-    <button onClick={addTask}>Add Task</button>
+      <h1>Task Manager</h1>
+      <TaskForm addTask={addTask} />
+      <TaskList tasks={tasks} deleteTask={deleteTask} />
     </div>
-    <div>
-    {tasks.map(task => (
-            <div key={task._id}>
-                <h3>{task.title}</h3>
-                <p>{task.description}</p>
-                <button onClick={() => alert('Edit task')}>Edit</button>
-    <button onClick={() => deleteTask(task._id)}>Delete</button>
-    </div>
-))}
-    </div>
-    </div>
-);
+  );
 };
 
 export default App;
