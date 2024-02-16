@@ -6,7 +6,7 @@ import {
   getAllTasks,
   createTask,
   deleteTask,
-  toggleDoneTask,
+  updateTask,
 } from "./controllers/taskController";
 
 // Connect to MongoDB
@@ -26,7 +26,7 @@ app.use(cors(corsOptions));
 app.get("/api/tasks", getAllTasks);
 app.post("/api/tasks", createTask);
 app.delete("/api/tasks/:taskId", deleteTask);
-app.put("/api/tasks/:taskId/toggleDone", toggleDoneTask);
+app.put("/api/tasks/:taskId/toggleDone", updateTask);
 
 // Start the server
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
