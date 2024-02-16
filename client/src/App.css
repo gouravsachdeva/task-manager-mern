@@ -1,0 +1,11 @@
+.task__item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.task__item button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  height: 100%;
+}

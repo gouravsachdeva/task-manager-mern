@@ -1,11 +1,12 @@
 import express from "express";
 import bodyParser from "body-parser";
 import connectDB from "./configs/connection";
-const cors = require("cors");
+import cors from "cors";
 import {
   getAllTasks,
   createTask,
   deleteTask,
+  toggleDoneTask,
 } from "./controllers/taskController";
 
 // Connect to MongoDB
@@ -25,6 +26,7 @@ app.use(cors(corsOptions));
 app.get("/api/tasks", getAllTasks);
 app.post("/api/tasks", createTask);
 app.delete("/api/tasks/:taskId", deleteTask);
+app.put("/api/tasks/:taskId/toggleDone", toggleDoneTask);
 
 // Start the server
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

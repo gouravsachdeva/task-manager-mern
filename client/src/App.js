@@ -5,7 +5,7 @@ import useTasks from "./utilities/hooks/useTasks";
 import "./App.css";
 
 const App = () => {
-  const { tasks, loading, addTask, deleteTask } = useTasks();
+  const { tasks, loading, addTask, deleteTask, toggleDone } = useTasks();
 
   return (
     <div>
@@ -14,7 +14,11 @@ const App = () => {
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <TaskList tasks={tasks} deleteTask={deleteTask} />
+        <TaskList
+          tasks={tasks}
+          deleteTask={deleteTask}
+          toggleDone={toggleDone}
+        />
       )}
     </div>
   );

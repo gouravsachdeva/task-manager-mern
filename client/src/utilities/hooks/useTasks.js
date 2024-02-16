@@ -33,7 +33,23 @@ const useTasks = () => {
       .catch((err) => console.log(err));
   };
 
-  return { tasks, loading, addTask, deleteTask };
+  const toggleDone = (taskId) => {
+    axios
+      .put(`${API_URL}/api/tasks/${taskId}/toggleDone`)
+      .then(() => {
+        setTasks((prevTasks) => {
+          return prevTasks.map((task) => {
+            if (task._id === taskId) {
+              return { ...task, done: !task.done };
+            }
+            return task;
+          });
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+
+  return { tasks, loading, addTask, deleteTask, toggleDone };
 };
 
 export default useTasks;
